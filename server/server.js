@@ -16,9 +16,7 @@ app.get('/', (req, res) => {
 
 app.get('/parents', (req, res) => {
   Parent.find({}).then(parents => {
-    res.send({
-      parents
-    });
+    res.send(parents);
   });
 });
 
@@ -39,9 +37,7 @@ app.get('/needs', (req, res) => {
   Needs.find({})
     .populate('parents')
     .then(needs => {
-      res.send({
-        needs
-      });
+      res.send(needs);
     });
 });
 
