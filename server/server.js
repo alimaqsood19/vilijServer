@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { mongoose } = require('./db/mongoose');
 const Parent = require('./models/parents');
 const Needs = require('./models/needs');
+const moment = require('moment');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,9 +16,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/parents', (req, res) => {
-  Parent.find({}).then(parents => {
-    res.send(parents);
-  });
+  Parent.find({})
+    .populate('friends')
+    .then(parents => {
+      res.send(parents);
+    });
 });
 
 app.post('/parents', (req, res) => {
@@ -53,6 +56,11 @@ app.post('/needs', (req, res) => {
       res.status(400).send(err);
     });
 });
+
+const someDate = new Date();
+console.log('date', someDate);
+const someMoment = moment().format('MMM Do YYYY');
+console.log('moment', someMoment);
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
