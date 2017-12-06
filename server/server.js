@@ -57,10 +57,75 @@ app.post('/needs', (req, res) => {
     });
 });
 
-const someDate = new Date();
-console.log('date', someDate);
-const someMoment = moment().format('MMM Do YYYY');
-console.log('moment', someMoment);
+app.patch('/parents/friends/:id', (req, res) => {
+  let id = req.params.id;
+
+  Parent.findOneAndUpdate(
+    { _id: id },
+    { $set: { friends: req.body.friends } },
+    { new: true }
+  )
+    .then(parent => {
+      if (!parent) {
+        return res.status(404).send('No parent with that ID found');
+      }
+      res.send(parent);
+    })
+    .catch(err => {
+      res.status(400).send('Invalid ID');
+    });
+});
+
+app.patch('/needs/:id', (req, res) => {
+  let id = req.params.id;
+
+  Needs.findOneAndUpdate({ _id: id }, { $set: req.body }, { new: true })
+    .then(need => {
+      if (!need) {
+        return res.status(404).send('No need with that ID found');
+      }
+      res.send(need);
+    })
+    .catch(err => {
+      res.status(400).send(err);
+    });
+});
+
+app.delete('/parents/remove/:id', (req, res) => {
+  let id = req.params.id;
+
+  Parent.findById({ _id: id }).then(parent => {
+    if (!parent) {
+      return res.status(404).send('No parent with that id to remove');
+    }
+  });
+
+  Parent.remove({ _id: id })
+    .then(() => {
+      res.send(`Successfully deleted ${id}`);
+    })
+    .catch(err => {
+      res.status(404).send(`Not found ${err}`);
+    });
+});
+
+app.delete('/needs/remove/:id', (req, res) => {
+  let id = req.params.id;
+
+  Needs.findOne({ _id: id }).then(need => {
+    if (!need) {
+      return res.status(404).send('No need found with that ID');
+    }
+  });
+
+  Needs.remove({ _id: id })
+    .then(() => {
+      res.send(`Successfully deleted ${id}`);
+    })
+    .catch(err => {
+      res.status(400).send(err);
+    });
+});
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
