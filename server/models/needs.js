@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ChildrenSchema = require('./children');
 
 const NeedSchema = new Schema({
   parents: [
@@ -10,7 +11,8 @@ const NeedSchema = new Schema({
   ],
   date: Date,
   time: String,
-  specialNotes: String
+  specialNotes: String,
+  selectedChildren: [ChildrenSchema]
 });
 
 const Needs = mongoose.model('need', NeedSchema);
