@@ -33,6 +33,8 @@ app.get('/parents/:id', (req, res) => {
   let id = req.params.id;
   Parent.find({ _id: id })
     .populate('friends', 'name description email address')
+    .populate('offered', 'date time specialNotes')
+    .populate('received', 'date time specialNotes')
     .then(parent => {
       res.send(parent);
     })
@@ -74,6 +76,11 @@ app.get('/needs', (req, res) => {
     .then(needs => {
       res.send(needs);
     });
+});
+
+//Grab a need based on a given ID
+app.get('/needs/:id', (req, res) => {
+  Needs.find({ _id: req.params.id });
 });
 
 //Creates a new need

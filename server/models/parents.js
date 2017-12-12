@@ -29,13 +29,13 @@ const ParentSchema = new Schema({
   offered: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'parent'
+      ref: 'need'
     }
   ],
   received: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'parent'
+      ref: 'need'
     }
   ]
 });
