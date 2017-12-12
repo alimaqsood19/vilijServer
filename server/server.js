@@ -80,7 +80,14 @@ app.get('/needs', (req, res) => {
 
 //Grab a need based on a given ID
 app.get('/needs/:id', (req, res) => {
-  Needs.find({ _id: req.params.id });
+  Needs.find({ _id: req.params.id })
+    .populate('parents')
+    .then(need => {
+      return res.status(200).send(need);
+    })
+    .catch(err => {
+      return res.status(404).send(err);
+    });
 });
 
 //Creates a new need
