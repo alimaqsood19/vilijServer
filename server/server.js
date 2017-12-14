@@ -122,10 +122,10 @@ app.patch('/needs/:id', (req, res) => {
 });
 
 //Update offered array value (add a new one)
-app.patch('/parents/offered/:id', (req, res) => {
+app.patch('/needs/offered/:id', (req, res) => {
   let id = req.params.id;
-  Parent.findOneAndUpdate({ _id: id }, { $push: { offered: req.body.offered } })
-    .then(parent => {
+  Needs.findOneAndUpdate({ _id: id }, { $push: { offered: req.body.offered } })
+    .then(need => {
       res.status(200).send('succesfull');
     })
     .catch(err => {
@@ -133,10 +133,10 @@ app.patch('/parents/offered/:id', (req, res) => {
     });
 });
 //Remove offered ID from array, need to pass the ID to remove in req.body._id
-app.patch('/parents/offered/remove/:id', (req, res) => {
+app.patch('/needs/offered/remove/:id', (req, res) => {
   let id = req.params.id;
-  Parent.findOneAndUpdate({ _id: id }, { $pull: { offered: req.body._id } })
-    .then(parent => {
+  Needs.findOneAndUpdate({ _id: id }, { $pull: { offered: req.body._id } })
+    .then(need => {
       res.status(200).send('successfully removed');
     })
     .catch(err => {
@@ -145,13 +145,13 @@ app.patch('/parents/offered/remove/:id', (req, res) => {
 });
 
 //Update received array value (add a new one)
-app.patch('/parents/received/:id', (req, res) => {
+app.patch('/needs/received/:id', (req, res) => {
   let id = req.params.id;
-  Parent.findOneAndUpdate(
+  Needs.findOneAndUpdate(
     { _id: id },
     { $push: { received: req.body.received } }
   )
-    .then(parent => {
+    .then(need => {
       res.status(200).send(`successfully added ${req.body.received}`);
     })
     .catch(err => {
@@ -160,10 +160,10 @@ app.patch('/parents/received/:id', (req, res) => {
 });
 
 //Remove an ID from the received array
-app.patch('/parents/received/remove/:id', (req, res) => {
+app.patch('/needs/received/remove/:id', (req, res) => {
   let id = req.params.id;
-  Parent.findOneAndUpdate({ _id: id }, { $pull: { received: req.body._id } })
-    .then(parent => {
+  Needs.findOneAndUpdate({ _id: id }, { $pull: { received: req.body._id } })
+    .then(need => {
       res.status(200).send(`successfully removed ${req.body._id}`);
     })
     .catch(err => {
