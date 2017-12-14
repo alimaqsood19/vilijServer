@@ -33,8 +33,6 @@ app.get('/parents/:id', (req, res) => {
   let id = req.params.id;
   Parent.find({ _id: id })
     .populate('friends', 'name description email address')
-    .populate('offered', 'date time specialNotes')
-    .populate('received', 'date time specialNotes')
     .then(parent => {
       res.send(parent);
     })
@@ -73,6 +71,8 @@ app.post('/parents', (req, res) => {
 app.get('/needs', (req, res) => {
   Needs.find({})
     .populate('parents')
+    .populate('offered', 'name')
+    .populate('received', 'name')
     .then(needs => {
       res.send(needs);
     });
@@ -82,6 +82,8 @@ app.get('/needs', (req, res) => {
 app.get('/needs/:id', (req, res) => {
   Needs.find({ _id: req.params.id })
     .populate('parents')
+    .populate('offered', 'name')
+    .populate('received', 'name')
     .then(need => {
       return res.status(200).send(need);
     })

@@ -12,7 +12,19 @@ const NeedSchema = new Schema({
   date: Date,
   time: String,
   specialNotes: String,
-  selectedChildren: [ChildrenSchema]
+  selectedChildren: [ChildrenSchema],
+  offered: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'parent'
+    }
+  ],
+  received: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'parent'
+    }
+  ]
 });
 
 const Needs = mongoose.model('need', NeedSchema);

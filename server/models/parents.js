@@ -25,18 +25,6 @@ const ParentSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'parent'
     }
-  ],
-  offered: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'need'
-    }
-  ],
-  received: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'need'
-    }
   ]
 });
 
