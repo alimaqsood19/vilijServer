@@ -60,7 +60,7 @@ app.post('/parents', (req, res) => {
   parent
     .save()
     .then(parent => {
-      res.send(parent);
+      res.send(parent._id);
     })
     .catch(err => {
       res.status(400).send(err);
